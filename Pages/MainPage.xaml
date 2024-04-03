@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ICarus_Rental.Pages.MainPage"
+             xmlns:viewmodel="clr-namespace:ICarus_Rental.ViewModels"
+             xmlns:models="clr-namespace:ICarus_Rental.Models"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             x:DataType="viewmodel:MainViewModel"
+             Loaded="ContentPage_Loaded">
+    <ScrollView>
+        <VerticalStackLayout Padding="10"
+                             Spacing="5">
+            <Border BackgroundColor="{StaticResource Light}">
+                <Grid ColumnDefinitions="*,*">
+                    <Label Text="ICarus" 
+                           VerticalOptions="Center"
+                           FontSize="50"
+                           FontAttributes="Bold"
+                           Margin="20,0"
+                           TextColor="{StaticResource Dark}"/>
+                    <Border Grid.Column="1"
+                            HeightRequest="130"
+                            StrokeShape="RoundRectangle 30"
+                            Padding="15,0"
+                            WidthRequest="130"
+                            HorizontalOptions="End"
+                            BackgroundColor="{StaticResource Mid}">
+                        <Border BackgroundColor="{StaticResource DarkMid}"
+                                StrokeShape="Ellipse"
+                                WidthRequest="70"
+                                HeightRequest="70">
+                            <Image Aspect="AspectFill">
+                                <Image.Source>
+                                    <UriImageSource Uri="{Binding User.ProfilePicture}" 
+                                                    CachingEnabled="False"/>
+                                </Image.Source>
+                            </Image>
+                        </Border>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding OpenProfileCommand}"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border x:Name="MapBorder">
+            </Border>
+            <Button BackgroundColor="{StaticResource Light}"
+                    HeightRequest="100"
+                    Text="Search Cars"
+                    TextColor="{StaticResource Dark}"
+                    FontSize="24"
+                    Clicked="GoToLocation"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

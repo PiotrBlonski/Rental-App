@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ICarus_Rental.Pages.User.CardsPage"
+             xmlns:viewmodel="clr-namespace:ICarus_Rental.ViewModels"
+             xmlns:models="clr-namespace:ICarus_Rental.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodel:CardsViewModel">
+    <Grid RowDefinitions="Auto, *"
+          Padding="10,0"
+          RowSpacing="5"
+          BackgroundColor="{StaticResource Dark}">
+        <Button BackgroundColor="{StaticResource Light}"
+                Text="Add new"
+                HeightRequest="100"
+                TextColor="{StaticResource Dark}"
+                CornerRadius="15"
+                Command="{Binding GoToAddPageCommand}"/>
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding User.Cards}"
+                        SelectionMode="Single">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="5"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Card">
+                    <Border BackgroundColor="{StaticResource Mid}"
+                            HeightRequest="240"
+                            Padding="50,10">
+                        <Grid RowDefinitions="*,*"
+                              ColumnDefinitions="*,Auto">
+                            <Label Text="{Binding Name}"
+                                   TextColor="{StaticResource Dark}"
+                                   VerticalOptions="Center"
+                                   FontSize="30"/>
+                            <Label Text="{Binding ExpirationDate}"
+                                   Grid.Row="1"
+                                   TextColor="{StaticResource Dark}"
+                                   VerticalOptions="Center"/>
+                            <Grid Grid.Column="1"
+                                  WidthRequest="60"
+                                  HeightRequest="60">
+                                <Button BackgroundColor="{StaticResource Dark}"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:CardsViewModel}}, Path=RemoveCardCommand}"
+                                        CommandParameter="{Binding .}"
+                                        CornerRadius="15"/>
+                                <Image Source="trash_icon.png"
+                                       WidthRequest="40">
+                                    <Image.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="{StaticResource Light}"/>
+                                    </Image.Behaviors>
+                                </Image>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ICarus_Rental.Pages.User.RentInfoPage"
+             xmlns:viewmodel="clr-namespace:ICarus_Rental.ViewModels"
+             xmlns:models="clr-namespace:ICarus_Rental.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodel:RentInfoViewModel"
+             Loaded="ContentPage_Loaded">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <VerticalStackLayout Spacing="5"
+                             Padding="5,0">
+            <Border BackgroundColor="{StaticResource Light}"
+                    HeightRequest="400"
+                    Padding="15">
+                <Grid RowDefinitions="Auto,*,Auto"
+                      RowSpacing="15">
+                    <Label Text="{Binding Car.Details}"
+                           VerticalOptions="Start" 
+                           HorizontalOptions="Center"
+                           TextColor="{StaticResource Dark}"
+                           FontSize="25"/>
+                    <Border Grid.Row="1"
+                            BackgroundColor="White">
+                        <Image Source="{Binding Car.ImageUrl}"/>
+                    </Border>
+                    <Button Text="Report Incident"
+                            Grid.Row="2"
+                            CornerRadius="15"
+                            IsVisible="{Binding Car.HasEnded, Converter={StaticResource InvertedBoolConverter}}"
+                            HeightRequest="70"
+                            Command="{Binding GoToIncidentPageCommand}"/>
+                </Grid>
+            </Border>
+            <Border IsVisible="{Binding Car.HasEnded, Converter={StaticResource InvertedBoolConverter}}"
+                    BackgroundColor="{StaticResource DarkMid}"
+                    x:Name="MapBorder">
+            </Border>
+            <Border BackgroundColor="{StaticResource Light}"
+                    HeightRequest="120"
+                    Padding="25">
+                <Grid ColumnDefinitions=".5*,*"
+                      RowDefinitions="*,*">
+                    <Label Text="Total"
+                           FontSize="25"
+                           Grid.RowSpan="2"
+                           VerticalOptions="Center"
+                           TextColor="{StaticResource Dark}"/>
+                    <Label Grid.Column="1"
+                           Text="{Binding Car.Bill}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           FontSize="30"
+                           TextColor="{StaticResource Dark}"
+                           FontAttributes="Bold">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label"
+                                         Value="true"
+                                         Binding="{Binding Car.HasEnded}">
+                                <Setter Property="Grid.RowSpan" Value="2"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <Label Grid.Column="1"
+                           Grid.Row="1"
+                           Text="(Pending)"
+                           TextColor="{StaticResource Dark}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           IsVisible="{Binding Car.HasEnded, Converter={StaticResource InvertedBoolConverter}}"/>
+                </Grid>
+            </Border>
+            <Border BackgroundColor="{StaticResource Light}"
+                    HeightRequest="120"
+                    Padding="25">
+                <Grid ColumnDefinitions=".5*,*">
+                    <Label Text="Status"
+                           FontSize="25"
+                           Grid.RowSpan="2"
+                           VerticalOptions="Center"
+                           TextColor="{StaticResource Dark}"/>
+                    <Label Grid.Column="1"
+                           Text="{Binding Status}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           FontSize="30"
+                           TextColor="{StaticResource Dark}"
+                           FontAttributes="Bold">
+                    </Label>
+                </Grid>
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border"
+                                 Value="false"
+                                 Binding="{Binding IsPaid}">
+                        <Setter Property="BackgroundColor" Value="{StaticResource Mid}"/>
+                    </DataTrigger>
+                </Border.Triggers>
+            </Border>
+            <Border HeightRequest="300"
+                    Padding="15"
+                    IsVisible="{Binding IsPaid, Converter={StaticResource InvertedBoolConverter}}">
+                <Grid RowDefinitions="Auto, *"
+                      RowSpacing="15">
+                    <Label Text="Choose Payment"/>
+                    <Border Grid.Row="1"
+                            BackgroundColor="{StaticResource Dark}"
+                            Padding="5,0">
+                        <CollectionView Grid.Row="1"
+                                        ItemsSource="{Binding User.Cards}">
+                            <CollectionView.Header>
+                                <Grid/>
+                            </CollectionView.Header>
+                            <CollectionView.Footer>
+                                <Grid/>
+                            </CollectionView.Footer>
+                            <CollectionView.ItemsLayout>
+                                <LinearItemsLayout Orientation="Vertical"
+                                                    ItemSpacing="5"/>
+                            </CollectionView.ItemsLayout>
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:Card">
+                                    <Border BackgroundColor="{StaticResource Mid}"
+                                            HeightRequest="150"
+                                            Padding="50,10">
+                                        <Grid RowDefinitions="*,*"
+                                              ColumnDefinitions="*,Auto">
+                                            <Label Text="{Binding Name}"
+                                                   TextColor="{StaticResource Dark}"
+                                                   VerticalOptions="Center"
+                                                   FontSize="30"/>
+                                            <Label Text="{Binding ExpirationDate}"
+                                                    Grid.Row="1"
+                                                    TextColor="{StaticResource Dark}"
+                                                    VerticalOptions="Center"/>
+                                            <Border Grid.Column="1"
+                                                    Grid.RowSpan="2"
+                                                    WidthRequest="50"
+                                                    HeightRequest="50">
+                                                <Image WidthRequest="30"
+                                                       IsVisible="{Binding Selected}"
+                                                       Source="ok_icon.png">
+                                                    <Image.Behaviors>
+                                                        <toolkit:IconTintColorBehavior TintColor="{StaticResource Light}"/>
+                                                    </Image.Behaviors>
+                                                </Image>
+                                            </Border>
+                                        </Grid>
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RentInfoViewModel}}, Path=SelectCardCommand}"
+                                                                  CommandParameter="{Binding .}"/>
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Border>
+                </Grid>
+            </Border>
+            <Button Text="Pay"
+                    HeightRequest="80"
+                    CornerRadius="15"
+                    IsVisible="{Binding ShowButton}"
+                    Clicked="Pay"/>
+            <Button Text="Return Car"
+                    HeightRequest="80"
+                    CornerRadius="15"
+                    IsVisible="{Binding Car.HasEnded, Converter={StaticResource InvertedBoolConverter}}"
+                    Clicked="ReturnCar"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

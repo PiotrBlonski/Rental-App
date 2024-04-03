@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ICarus_Rental.Pages.User.SettingsPage"
+             xmlns:viewmodel="clr-namespace:ICarus_Rental.ViewModels"
+             xmlns:models="clr-namespace:ICarus_Rental.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodel:SettingsViewModel">
+    <ScrollView>
+        <VerticalStackLayout Padding="10"
+                             Spacing="25">
+            <Border HeightRequest="370">
+                <VerticalStackLayout Padding="15"
+                                     Spacing="15"
+                                     BackgroundColor="Transparent">
+                    <Label Text="Change your details"
+                           FontSize="24"/>
+                    <Label Text="Name"/>
+                    <Border Grid.Row="1"
+                            BackgroundColor="{StaticResource Dark}"
+                            HeightRequest="50"
+                            Padding="15,5">
+                        <Entry TextColor="{StaticResource Light}"
+                               Text="{Binding Name}"/>
+                    </Border>
+                    <Label Text="Last Name"/>
+                    <Border Grid.Row="1"
+                            BackgroundColor="{StaticResource Dark}"
+                            HeightRequest="50"
+                            Padding="15,5">
+                        <Entry TextColor="{StaticResource Light}"
+                               Text="{Binding LastName}"/>
+                    </Border>
+                    <Button BackgroundColor="{StaticResource Light}"
+                            HeightRequest="80"
+                            Text="Change Details"
+                            TextColor="{StaticResource Dark}"
+                            Command="{Binding UpdateDetailsCommand}"/>
+                </VerticalStackLayout>
+            </Border>
+            <Border HeightRequest="300">
+                <Grid RowSpacing="15"
+                      Padding="25, 15, 25, 25"
+                      RowDefinitions="Auto,*">
+                    <Label Text="Change Avatar"
+                           FontSize="24"/>
+                    <Border Grid.Row="1"
+                            BackgroundColor="{StaticResource Dark}">
+                        <Grid>
+                            <Button BackgroundColor="Transparent"
+                                    Command="{Binding UploadAvatarCommand}"/>
+                            <Image Source="profile_icon.png"
+                                   WidthRequest="60">
+                                <Image.Behaviors>
+                                    <toolkit:IconTintColorBehavior  TintColor="{StaticResource Light}"/>
+                                </Image.Behaviors>
+                            </Image>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+            <Border BackgroundColor="{StaticResource Mid}"
+                    HeightRequest="370">
+                <VerticalStackLayout Padding="15"
+                                     Spacing="15"
+                                     BackgroundColor="Transparent">
+                    <Label Text="Change Password"
+                           FontSize="24"
+                           TextColor="{StaticResource Dark}"/>
+                    <Label Text="Old Password"/>
+                    <Border Grid.Row="1"
+                            BackgroundColor="{StaticResource Light}"
+                            HeightRequest="50"
+                            Padding="15,5">
+                        <Entry TextColor="{StaticResource Dark}"
+                               Text="{Binding OldPassword}"
+                               IsPassword="True"/>
+                    </Border>
+                    <Label Text="New Password"/>
+                    <Border Grid.Row="1"
+                            BackgroundColor="{StaticResource Light}"
+                            HeightRequest="50"
+                            Padding="15,5">
+                        <Entry TextColor="{StaticResource Dark}"
+                               Text="{Binding NewPassword}"
+                               IsPassword="True"/>
+                    </Border>
+                    <Button BackgroundColor="{StaticResource Dark}"
+                            HeightRequest="80"
+                            Text="Apply"
+                            Command="{Binding UpdatePasswordCommand}"/>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

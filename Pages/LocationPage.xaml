@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ICarus_Rental.Pages.LocationPage"
+             xmlns:viewmodel="clr-namespace:ICarus_Rental.ViewModels"
+             xmlns:models="clr-namespace:ICarus_Rental.Models"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             x:DataType="viewmodel:LocationViewModel">
+    <Grid RowDefinitions="Auto,*"
+          BackgroundColor="{StaticResource Dark}">
+        <Border Background="{StaticResource Mid}"
+                Padding="25"
+                StrokeShape="RoundRectangle 10">
+            <Label Text="{Binding Pin.Label}"
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    TextColor="{StaticResource Light}"/>
+        </Border>
+        <CollectionView ItemsSource="{Binding Cars}"
+                        Grid.Row="1">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"
+                                   ItemSpacing="5"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Car">
+                    <Border BackgroundColor="{StaticResource Light}"
+                            HeightRequest="250"
+                            Padding="25">
+                        <Grid ColumnDefinitions="*,*"
+                              RowDefinitions="*,*,*"
+                              ColumnSpacing="15"
+                              RowSpacing="15">
+                            <Grid RowDefinitions="Auto,Auto,Auto"
+                                  RowSpacing="5">
+                                <Label Text="{Binding Brand}"
+                                       FontSize="30"
+                                       TextColor="{StaticResource DarkMid}"
+                                       HorizontalOptions="End"
+                                       FontAttributes="Bold"/>
+                                <Label Grid.Row="1" 
+                                       FontSize="25"
+                                       TextColor="{StaticResource DarkMid}"
+                                       HorizontalOptions="End"
+                                       Text="{Binding Model}"/>
+                                <Label Grid.Row="2" 
+                                       FontSize="20"
+                                       TextColor="{StaticResource DarkMid}"
+                                       HorizontalOptions="End"
+                                       Text="{Binding Year}"/>
+                            </Grid>
+                            <Border Grid.Row="2"
+                                    BackgroundColor="{StaticResource Mid}">
+                                <Label Text="{Binding State}"
+                                       FontAttributes="Bold"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"/>
+                            </Border>
+                            <Border Grid.Column="1"
+                                    Grid.RowSpan="2"
+                                    BackgroundColor="White">
+                                <Image Source="{Binding ImageUrl}"/>
+                            </Border>
+                            <Border Grid.Row="2"
+                                    Grid.Column="1"
+                                    BackgroundColor="{StaticResource Dark}">
+                            <Label Text="{Binding FullPrice}"
+                                    FontAttributes="Bold"
+                                    FontSize="20"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"/>
+                            </Border>
+                        </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={ RelativeSource AncestorType={x:Type viewmodel:LocationViewModel}}, Path=GoToCarPageCommand}"
+                                                  CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

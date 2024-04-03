@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ICarus_Rental.Pages.User.ProfilePage"
+             xmlns:viewmodel="clr-namespace:ICarus_Rental.ViewModels"
+             xmlns:models="clr-namespace:ICarus_Rental.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodel:ProfileViewModel">
+    <RefreshView Command="{Binding RefreshCommand}"
+                 IsRefreshing="{Binding IsRefreshing}"
+                 RefreshColor="{StaticResource Dark}">
+        <ScrollView>
+            <VerticalStackLayout Spacing="10">
+                <Border HeightRequest="200"
+                        Padding="25">
+                    <Grid RowDefinitions="*, Auto">
+                        <Border StrokeShape="RoundRectangle 15"
+                                HeightRequest="100"
+                                WidthRequest="100"
+                                BackgroundColor="{StaticResource Dark}">
+                            <Image Aspect="AspectFill"
+                                   x:Name="AvatarContainer">
+                                <Image.Source>
+                                    <UriImageSource Uri="{Binding User.ProfilePicture}"
+                                                    CachingEnabled="false"/>
+                                </Image.Source>
+                            </Image>
+                        </Border>
+                        <Label Grid.Row="1" 
+                               Text="{Binding User.FullName}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               FontSize="40"/>
+                    </Grid>
+                </Border>
+                <Border BackgroundColor="{StaticResource Light}"
+                        HeightRequest="400">
+                    <Grid RowDefinitions="Auto,*"
+                          RowSpacing="15"
+                          Padding="15">
+                        <Grid Padding="25,0">
+                            <Label Text="Rented Cars"
+                                   VerticalOptions="Center"
+                                   TextColor="{StaticResource Dark}"
+                                   FontSize="20"/>
+                            <Grid Grid.Column="1"
+                                  HorizontalOptions="End"
+                                  WidthRequest="40"
+                                  HeightRequest="40">
+                                <Button Command="{Binding GoToSortPageCommand}"
+                                        CommandParameter="{Binding User.RentedCars}"/>
+                                <Image Source="arrow_rightup_icon.png"
+                                       WidthRequest="30">
+                                    <Image.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="{StaticResource Light}"/>
+                                    </Image.Behaviors>
+                                </Image>
+                            </Grid>
+                        </Grid>
+                        <Border Grid.Row="1">
+                            <CollectionView ItemsSource="{Binding User.RentedCars}">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical" 
+                                                       ItemSpacing="5"/>
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="{x:Type models:Car}">
+                                        <Border BackgroundColor="{StaticResource Dark}"
+                                                HeightRequest="200"
+                                                Padding="20">
+                                            <Grid RowDefinitions="*,*"
+                                                  ColumnDefinitions="*,*"
+                                                  RowSpacing="5"
+                                                  ColumnSpacing="15">
+                                                <Border Padding="10,0"
+                                                        StrokeShape="RoundRectangle 10"
+                                                        BackgroundColor="{StaticResource Mid}">
+                                                    <Label Text="{Binding FullName}"
+                                                           VerticalOptions="Center"
+                                                           HorizontalOptions="Center"
+                                                           VerticalTextAlignment="Center"
+                                                           FontAttributes="Bold"
+                                                           FontSize="20"/>
+                                                </Border>
+                                                <Border Grid.Row="1">
+                                                    <Label Text="{Binding StartDateString }"
+                                                           VerticalOptions="Center"
+                                                           HorizontalOptions="Center"/>
+                                                </Border>
+                                                <Border BackgroundColor="White"
+                                                        Grid.Column="1"
+                                                        Grid.RowSpan="2">
+                                                    <Image Source="{Binding ImageUrl}"/>
+                                                </Border>
+                                            </Grid>
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfileViewModel}}, Path=GoToRentInfoCommand}"
+                                                                      CommandParameter="{Binding .}"/>
+                                            </Border.GestureRecognizers>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Border>
+                    </Grid>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border"
+                                     Value="0"
+                                     Binding="{Binding User.RentedCars.Count}">
+                            <Setter Property="IsVisible" Value="false"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                </Border>
+                <Border BackgroundColor="{StaticResource Light}"
+                        HeightRequest="400">
+                    <Grid RowDefinitions="Auto,*"
+                          RowSpacing="15"
+                          Padding="15">
+                        <Grid Padding="25,0">
+                            <Label Text="Rent History"
+                                   VerticalOptions="Center"
+                                   TextColor="{StaticResource Dark}"
+                                   FontSize="20"/>
+                            <Grid Grid.Column="1"
+                                  HorizontalOptions="End"
+                                  WidthRequest="40"
+                                  HeightRequest="40">
+                                <Button Command="{Binding GoToSortPageCommand}"
+                                        CommandParameter="{Binding User.RentHistory}"/>
+                                <Image Source="arrow_rightup_icon.png"
+                                       WidthRequest="30">
+                                    <Image.Behaviors>
+                                        <toolkit:IconTintColorBehavior TintColor="{StaticResource Light}"/>
+                                    </Image.Behaviors>
+                                </Image>
+                            </Grid>
+                        </Grid>
+                        <Border Grid.Row="1">
+                            <CollectionView ItemsSource="{Binding User.RentHistory}">
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout Orientation="Vertical" 
+                                                       ItemSpacing="5"/>
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="{x:Type models:Car}">
+                                        <Border BackgroundColor="{StaticResource Dark}"
+                                                HeightRequest="200"
+                                                Padding="20">
+                                            <Grid RowDefinitions="*,*,*"
+                                                  ColumnDefinitions="*,*"
+                                                  RowSpacing="5"
+                                                  ColumnSpacing="15">
+                                                <Border Padding="10,0"
+                                                        StrokeShape="RoundRectangle 10"
+                                                        BackgroundColor="{StaticResource Mid}">
+                                                    <Label Text="{Binding FullName}"
+                                                           VerticalOptions="Center"
+                                                           HorizontalOptions="Center"
+                                                           VerticalTextAlignment="Center"
+                                                           FontAttributes="Bold"
+                                                           FontSize="20"/>
+                                                </Border>
+                                                <Border Grid.Row="1">
+                                                    <Label Text="{Binding StartDateString }"
+                                                           VerticalOptions="Center"
+                                                           HorizontalOptions="Center"/>
+                                                </Border>
+                                                <Border Grid.Row="2">
+                                                    <Label Text="{Binding EndDateString }"
+                                                           VerticalOptions="Center"
+                                                           HorizontalOptions="Center"/>
+                                                </Border>
+                                                <Border BackgroundColor="White"
+                                                        Grid.Column="1"
+                                                        Grid.RowSpan="3">
+                                                    <Image Source="{Binding ImageUrl}"/>
+                                                </Border>
+                                            </Grid>
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:ProfileViewModel}}, Path=GoToRentInfoCommand}"
+                                                                      CommandParameter="{Binding .}"/>
+                                            </Border.GestureRecognizers>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Border>
+                    </Grid>
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border"
+                                     Value="0"
+                                     Binding="{Binding User.RentHistory.Count}">
+                            <Setter Property="IsVisible" Value="false"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+                </Border>
+                <Button BackgroundColor="{StaticResource Light}"
+                        HeightRequest="80"
+                        Text="Cards"
+                        TextColor="{StaticResource Dark}"
+                        FontSize="24"
+                        Command="{Binding GoToCardsPageCommand}"
+                        CommandParameter="{Binding User}"/>
+                <Button BackgroundColor="{StaticResource Light}"
+                        HeightRequest="80"
+                        Text="Settings"
+                        TextColor="{StaticResource Dark}"
+                        FontSize="24"
+                        Command="{Binding GoToSettingsPageCommand}"
+                        CommandParameter="{Binding User}"/>
+                <Button Text="Log Out"
+                        HeightRequest="80"
+                        FontSize="24"
+                        Command="{Binding LogoutCommand}"/>
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

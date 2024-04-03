@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ICarus_Rental.Pages.Authorization.RegisterPage"
+             xmlns:viewmodel="clr-namespace:ICarus_Rental.ViewModels"
+             x:DataType="viewmodel:RegisterViewModel">
+    <Grid BackgroundColor="{StaticResource Dark}">
+        <Border WidthRequest="300"
+                HeightRequest="600"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                StrokeThickness="2"
+                Stroke="{StaticResource Light}"
+                StrokeShape="RoundRectangle 15">
+            <Grid  VerticalOptions="Center"
+                   RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                   RowSpacing="10"
+                   Padding="15,0">
+                <Grid RowDefinitions="Auto,*"
+                      RowSpacing="5">
+                    <Label Text="Name"/>
+                    <Border Grid.Row="1"
+                            BackgroundColor="{StaticResource Light}"
+                            Padding="15,5"
+                            StrokeShape="RoundRectangle 10">
+                        <Entry Text="{Binding Name}"
+                               MaxLength="30"/>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="1"
+                      RowDefinitions="Auto,*"
+                      RowSpacing="5">
+                    <Label Text="Last Name"/>
+                    <Border Grid.Row="1"
+                            BackgroundColor="{StaticResource Light}"
+                            Padding="15,5"
+                            StrokeShape="RoundRectangle 10">
+                        <Entry Text="{Binding LastName}"
+                               MaxLength="30"/>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="2"
+                      RowDefinitions="Auto,*"
+                      RowSpacing="5">
+                    <Label Text="Login"/>
+                    <Border Grid.Row="1"
+                            BackgroundColor="{StaticResource Light}"
+                            Padding="15,5"
+                            StrokeShape="RoundRectangle 10">
+                        <Entry Text="{Binding Login}"
+                               MaxLength="20"/>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="3"
+                      RowDefinitions="Auto,*"
+                      RowSpacing="5">
+                    <Label Text="Password"/>
+                    <Border Grid.Row="1"
+                            BackgroundColor="{StaticResource Light}"
+                            Padding="15,5"
+                            StrokeShape="RoundRectangle 10">
+                        <Entry Text="{Binding Password}"
+                               MaxLength="30"
+                               IsPassword="True"/>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="4"
+                      RowDefinitions="Auto,*"
+                      RowSpacing="5">
+                    <Label Text="{Binding Message}"/>
+                    <Button Grid.Row="1"
+                            Text="Sign Up"
+                            HeightRequest="70"
+                            Command="{Binding RegisterCommand}"/>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

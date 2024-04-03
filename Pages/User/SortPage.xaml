@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ICarus_Rental.Pages.User.SortPage"
+             xmlns:viewmodel="clr-namespace:ICarus_Rental.ViewModels"
+             xmlns:models="clr-namespace:ICarus_Rental.Models"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:DataType="viewmodel:SortViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto,*"
+          BackgroundColor="{StaticResource Dark}">
+        <Grid HeightRequest="120" 
+                RowDefinitions="*,*"
+                ColumnDefinitions="Auto, *"
+                ColumnSpacing="25"
+                BackgroundColor="{StaticResource DarkMid}"
+                Padding="25,0">
+            <Label Text="From:"
+                    VerticalOptions="Center"/>
+            <Border BackgroundColor="{StaticResource Light}"
+                    HeightRequest="50"
+                    Padding="15,0"
+                    Grid.Column="1">
+                <DatePicker Date="{Binding FromDate}"
+                            TextColor="{StaticResource Dark}"
+                            VerticalOptions="Center"/>
+            </Border>
+            <Label Text="To:"
+                    VerticalOptions="Center"
+                    Grid.Row="1"/>
+            <Border Grid.Row="1"
+                    Grid.Column="1"
+                    BackgroundColor="{StaticResource Light}"
+                    HeightRequest="50"
+                    Padding="15,0">
+                <DatePicker Date="{Binding ToDate}"
+                            TextColor="{StaticResource Dark}"
+                            VerticalOptions="Center"/>
+            </Border>
+        </Grid>
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding SortedCars}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" 
+                                   ItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.Header>
+                <Grid HeightRequest="0"/>
+            </CollectionView.Header>
+            <CollectionView.Footer>
+                <Grid HeightRequest="0"/>
+            </CollectionView.Footer>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type models:Car}">
+                    <Border BackgroundColor="{StaticResource DarkMid}"
+                            HeightRequest="200"
+                            Padding="20">
+                        <Grid RowDefinitions="*,*,*"
+                                ColumnDefinitions="*,*"
+                                RowSpacing="5"
+                                ColumnSpacing="15">
+                            <Border Padding="10,0"
+                                    StrokeShape="RoundRectangle 10"
+                                    BackgroundColor="{StaticResource Mid}">
+                                <Label Text="{Binding FullName}"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Center"
+                                        VerticalTextAlignment="Center"
+                                        FontAttributes="Bold"
+                                        FontSize="20"/>
+                            </Border>
+                            <Border Grid.Row="1"
+                                    BackgroundColor="{StaticResource Dark}">
+                                <Label Text="{Binding StartDateString }"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="Center"/>
+                            </Border>
+                            <Border Grid.Row="2"
+                                    BackgroundColor="{StaticResource Dark}"
+                                    IsVisible="{Binding HasEnded}">
+                                <Label Text="{Binding EndDateString }"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"/>
+                            </Border>
+                            <Border Grid.Row="2"
+                                    BackgroundColor="{StaticResource Light}"
+                                    IsVisible="{Binding HasEnded, Converter={StaticResource InvertedBoolConverter}}">
+                                <Label Text="{Binding Bill}"
+                                       VerticalOptions="Center"
+                                       TextColor="{StaticResource Dark}"
+                                       HorizontalOptions="Center"/>
+                           </Border>
+                            <Border BackgroundColor="White"
+                                    Grid.Column="1"
+                                    Grid.RowSpan="3">
+                                <Image Source="{Binding ImageUrl}"/>
+                            </Border>
+                        </Grid>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={ RelativeSource AncestorType={x:Type viewmodel:SortViewModel}}, Path=GoToRentInfoCommand}"
+                                                  CommandParameter="{Binding .}"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

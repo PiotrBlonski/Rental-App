@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ICarus_Rental.Pages.RentSummaryPage"
+             xmlns:viewmodel="clr-namespace:ICarus_Rental.ViewModels"
+             xmlns:models="clr-namespace:ICarus_Rental.Models"
+             xmlns:maps="clr-namespace:Microsoft.Maui.Controls.Maps;assembly=Microsoft.Maui.Controls.Maps"
+             x:DataType="viewmodel:RentSummaryViewModel">
+    <ScrollView>
+        <VerticalStackLayout Spacing="5"
+                             Padding="5">
+            <Label Text="Car"
+                   FontSize="30"/>
+            <Border BackgroundColor="{StaticResource Light}"
+                    HeightRequest="200"
+                    Padding="25, 15">
+                <Grid ColumnDefinitions="*,*">
+                    <Label Text="{Binding Car.Details}"
+                           TextColor="{StaticResource Dark}"
+                           VerticalOptions="Center"
+                           FontAttributes="Bold"
+                           FontSize="25"/>
+                    <Border Grid.Column="1"
+                            BackgroundColor="White">
+                        <Image Source="{Binding Car.ImageUrl}"/>
+                    </Border>
+                </Grid>
+            </Border>
+            <Label Text="Price"
+                   FontSize="30"/>
+            <Border BackgroundColor="{StaticResource Light}"
+                    HeightRequest="100"
+                    Padding="25, 15">
+                <Grid ColumnDefinitions="*,*"
+                      RowDefinitions="*,*">
+                    <Label Text="Rent Fee:"
+                           TextColor="{StaticResource Dark}"
+                           VerticalOptions="Center"
+                           FontSize="25"/>
+                    <Label Text="Price:"
+                           TextColor="{StaticResource Dark}"
+                           VerticalOptions="Center"
+                           FontSize="25"
+                           Grid.Row="1"/>
+                    <Label Text="50 PLN"
+                           TextColor="{StaticResource Dark}"
+                           VerticalOptions="Center"
+                           FontAttributes="Bold"
+                           Grid.Column="1"
+                           FontSize="25"/>
+                    <Label Text="{Binding Car.FullPrice}"
+                           TextColor="{StaticResource Dark}"
+                           VerticalOptions="Center"
+                           FontAttributes="Bold"
+                           FontSize="25"
+                           Grid.Column="1"
+                           Grid.Row="1"/>
+                </Grid>
+            </Border>
+            <Label Text="Location"
+                   FontSize="30"/>
+            <Border BackgroundColor="{StaticResource Light}"
+                    HeightRequest="350"
+                    x:Name="MapBorder">
+            </Border>
+            <Button Text="Confirm"
+                    CornerRadius="15"
+                    HeightRequest="80"
+                    Command="{Binding RentCommand}"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

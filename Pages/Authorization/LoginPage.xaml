@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ICarus_Rental.Pages.Authorization.LoginPage"
+             xmlns:viewmodel="clr-namespace:ICarus_Rental.ViewModels"
+             x:DataType="viewmodel:LoginViewModel">
+    <Grid BackgroundColor="{StaticResource Dark}">
+        <Border WidthRequest="300"
+                HeightRequest="500"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                StrokeThickness="2"
+                Stroke="{StaticResource Light}"
+                StrokeShape="RoundRectangle 15"
+                Padding="15,0">
+            <Grid  VerticalOptions="Center"
+                   RowDefinitions="Auto,Auto,Auto,Auto"
+                   RowSpacing="15">
+                <Grid RowDefinitions="Auto,*"
+                      RowSpacing="5">
+                    <Label Text="Login"/>
+                    <Border Grid.Row="1"
+                            BackgroundColor="{StaticResource Light}"
+                            Padding="15,5"
+                            StrokeShape="RoundRectangle 10">
+                        <Entry Text="{Binding Login}"/>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="1"
+                      RowDefinitions="Auto,*"
+                      RowSpacing="5">
+                    <Label Text="Password"/>
+                    <Border Grid.Row="1"
+                            BackgroundColor="{StaticResource Light}"
+                            Padding="15,5"
+                            StrokeShape="RoundRectangle 10">
+                        <Entry Grid.Row="1"
+                               Text="{Binding Password}"
+                               IsPassword="True"/>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="2"
+                      RowDefinitions="Auto,*">
+                    <Label Text="{Binding Message}"/>
+                </Grid>
+                <Grid Grid.Row="3"
+                      ColumnDefinitions="*,*"
+                      RowDefinitions="*,*"
+                      ColumnSpacing="15"
+                      RowSpacing="25">
+                    <Button Text="Log In"
+                            Grid.ColumnSpan="2"
+                            HeightRequest="50"
+                            Command="{Binding LogInCommand}"/>
+                    <Button Grid.Row="1"
+                            Text="Sign up"
+                            Clicked="GoToSignUpPage"
+                            FontSize="14"/>
+                    <Button Grid.Row="1" 
+                            Grid.Column="1" 
+                            Text="Reset Password"
+                            FontSize="14"
+                            IsEnabled="False"
+                            LineBreakMode="WordWrap"/>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ICarus_Rental.Pages.CarHistoryPage"
+             xmlns:viewmodel="clr-namespace:ICarus_Rental.ViewModels"
+             xmlns:models="clr-namespace:ICarus_Rental.Models"
+             x:DataType="viewmodel:CarHistoryViewModel">
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label Text="No Incidents"
+                   IsVisible="false"
+                   HorizontalOptions="Center"
+                   FontSize="25"
+                   TextColor="{StaticResource Light}">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label"
+                                 Value="0"
+                                 Binding="{Binding History.Count}">
+                        <Setter Property="IsVisible" Value="true"/>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+            <CollectionView ItemsSource="{Binding History}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical"
+                                       ItemSpacing="5"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Incident">
+                        <Border HeightRequest="100"
+                                Padding="20"
+                                BackgroundColor="{StaticResource Light}">
+                            <Grid ColumnDefinitions="*,*">
+                                <Label TextColor="{StaticResource Dark}"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"
+                                       Text="{Binding DateOnly}"
+                                       FontSize="15"/>
+                                <Label TextColor="{StaticResource Dark}"
+                                       Text="{Binding Details}"
+                                       VerticalOptions="Center"
+                                       Grid.Column="1"
+                                       FontSize="15"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
