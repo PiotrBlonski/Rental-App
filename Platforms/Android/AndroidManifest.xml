@@ -10,7 +10,7 @@
 				 android:enabled="true" 
 				 android:icon="@mipmap/appicon" 
 				 android:usesCleartextTraffic="true">
-		<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDB1eFcwiuyO_viqmXvz0-lsJDVdPmKfB0"/>
+		<meta-data android:name="com.google.android.geo.API_KEY" android:value="apikey"/>
 	</application>
 	<uses-sdk android:minSdkVersion="26" android:targetSdkVersion="33" />
 </manifest>
